@@ -1,18 +1,9 @@
 import deeplabcut
-import Asymmetry_Detection_V3 as asym
 import Excel_Generator as exg
 import Asymmetry_Detection_V5 as asym
 import argparse
 import json
 from pathlib import Path, PureWindowsPath
-
-# # Initiate variables
-# video_path = r"C:\Users\999381\Desktop\Equine\Test_Data\Lame_5.mp4"
-# dest_folder=r"C:\Users\999381\Desktop\Equine\apps\Direct_Output"
-# superanimal_name = "superanimal_quadruped"
-# model_name="hrnet_w32"
-# detector_name="fasterrcnn_resnet50_fpn_v2"
-
 
 # Post estimation
 def post_estimation(video_path: str,
