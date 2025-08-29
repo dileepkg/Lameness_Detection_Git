@@ -21,6 +21,9 @@ imageio-ffmpeg>=0.4.9
 openai
 opencv-python-headless==4.9.0.80
 deeplabcut[modelzoo]        # DLC + model zoo support (CPU-only is fine on Cloud)
-tensorflow==2.10.1
-protobuf<3.20
+deeplabcut==3.0.0rc9
+torch>=2.2
+torchvision>=0.17
+
+
 
