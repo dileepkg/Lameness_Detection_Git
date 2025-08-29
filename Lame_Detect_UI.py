@@ -13,6 +13,7 @@ from PIL import Image
 import base64
 from openai import OpenAI
 from dotenv import load_dotenv
+from dlclibrary import download_huggingface_model
 
 # Load environment variables
 load_dotenv()
@@ -24,6 +25,7 @@ dest_folder ="./output"
 os.makedirs(checkpoint_dir, exist_ok=True)
 os.makedirs(dest_folder, exist_ok=True)
 os.environ["DLC_MODELZOO_CHECKPOINTS"] = checkpoint_dir
+download_huggingface_model("superanimal_quadruped", checkpoint_dir)
 
 # Debugging: Log DeepLabCut configuration
 st.write(f"DeepLabCut checkpoint directory set to: {checkpoint_dir}")
@@ -39,6 +41,8 @@ def post_estimation(video_path: str,
                     model_name: str = "hrnet_w32",
                     detector_name: str = "fasterrcnn_resnet50_fpn_v2"
 ):
+    detector_path = checkpoint_dir / "fasterrcnn_resnet50_fpn_v2.pt"
+    pose_path     = checkpoint_dir / "superanimal_quadruped_hrnet_w32.pt"
     video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
@@ -48,8 +52,8 @@ def post_estimation(video_path: str,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
                                         video_adapt=False,
-                                        customized_pose_checkpoint=checkpoint_dir,
-                                        customized_detector_checkpoint=checkpoint_dir,
+                                        customized_pose_checkpoint=str(pose_path),
+                                        customized_detector_checkpoint=str(detector_path),
                                         plot_bboxes=True)
 
 def to_posix_rel(path_str: str) -> str:
