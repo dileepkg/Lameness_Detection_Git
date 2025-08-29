@@ -1,26 +1,6 @@
-# streamlit_app.py (top of file)
-import os, pathlib
-
-# Put all caches under a local .cache folder (writable on Streamlit Cloud)
-CACHE = pathlib.Path(".cache")
-HF = CACHE / "hf"
-# DLC_CKPTS = CACHE / "dlc" / "modelzoo" / "checkpoints"
-# for p in (HF, DLC_CKPTS):
-#     p.mkdir(parents=True, exist_ok=True)
-
-# Make HuggingFace + general caches land in our writable dir (DLC uses HF for models)
-os.environ["HF_HOME"] = str(HF)
-os.environ["XDG_CACHE_HOME"] = str(CACHE)
-
-
-(CACHE / "huggingface").mkdir(parents=True, exist_ok=True)
-os.environ["XDG_CACHE_HOME"] = str(CACHE)                  # generic cache root
-os.environ["HF_HOME"] = str(CACHE / "huggingface")         # Hugging Face cache
-
 import streamlit as st
 # import deeplabcut
 from deeplabcut import video_inference_superanimal
-from dlclibrary import download_huggingface_model
 import Excel_Generator as exg
 import Asymmetry_Detection_V6 as asym
 import json
@@ -35,9 +15,13 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
-download_huggingface_model("superanimal_quadruped", str(CACHE / "dlc" / "modelzoo" / "checkpoints"))
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
+
+# Set DeepLabCut checkpoint directory to a writable location
+checkpoint_dir = os.path.join(tempfile.gettempdir(), "checkpoints")
+os.makedirs(checkpoint_dir, exist_ok=True)
+os.environ["DLC_MODELZOO_CHECKPOINTS"] = checkpoint_dir
 
 # Post estimation function
 def post_estimation(video_path: str,
@@ -46,9 +30,6 @@ def post_estimation(video_path: str,
                     model_name: str = "hrnet_w32",
                     detector_name: str = "fasterrcnn_resnet50_fpn_v2"
 ):
-    # detector_path = DLC_CKPTS / "fasterrcnn_resnet50_fpn_v2.pt"
-    # pose_path     = DLC_CKPTS / "superanimal_quadruped_hrnet_w32.pt"
-
     video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
@@ -57,8 +38,6 @@ def post_estimation(video_path: str,
                                         dest_folder=dest_folder,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
-                                        # customized_detector_checkpoint=str(detector_path),   # <- key bit
-                                        # customized_pose_checkpoint=str(pose_path), 
                                         video_adapt=False,
                                         plot_bboxes=True)
 
@@ -131,7 +110,7 @@ st.title("🐎 Horse Lameness Detection 👨‍⚕️")
 
 # Create temporary directory for file processing
 temp_dir = tempfile.mkdtemp()
-dest_folder = "outputs" #temp_dir
+dest_folder = temp_dir
 
 # Sidebar with tabs
 tab1, tab2 = st.sidebar.tabs(["Video Upload", "Image Upload"])
