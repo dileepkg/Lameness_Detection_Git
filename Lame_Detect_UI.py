@@ -55,8 +55,8 @@ def post_estimation(video_path: str,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
                                         video_adapt=False,
-                                        customized_pose_checkpoint=pose_path,
-                                        customized_detector_checkpoint=detector_path,
+                                        # customized_pose_checkpoint=pose_path,
+                                        # customized_detector_checkpoint=detector_path,
                                         plot_bboxes=True)
 
 def to_posix_rel(path_str: str) -> str:
