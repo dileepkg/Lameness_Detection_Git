@@ -20,3 +20,4 @@ types-python-dateutil==2.9.0.20250708
 ffmpeg-python>=0.2.0
 imageio>=2.31
 imageio-ffmpeg>=0.4.9
+openai
