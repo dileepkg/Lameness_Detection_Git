@@ -20,7 +20,9 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Set DeepLabCut checkpoint directory to a writable location
 checkpoint_dir = "./checkpoints"
+dest_folder ="./output"
 os.makedirs(checkpoint_dir, exist_ok=True)
+os.makedirs(dest_folder, exist_ok=True)
 os.environ["DLC_MODELZOO_CHECKPOINTS"] = checkpoint_dir
 
 # Debugging: Log DeepLabCut configuration
@@ -45,6 +47,8 @@ def post_estimation(video_path: str,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
                                         video_adapt=False,
+                                        customized_pose_checkpoint=checkpoint_dir,
+                                        customized_detector_checkpoint=checkpoint_dir,
                                         plot_bboxes=True)
 
 def to_posix_rel(path_str: str) -> str:
@@ -116,7 +120,7 @@ st.title("🐎 Horse Lameness Detection 👨‍⚕️")
 
 # Create temporary directory for file processing
 # temp_dir = tempfile.mkdtemp()
-dest_folder = checkpoint_dir#temp_dir
+# dest_folder = dest_folder#temp_dir
 
 # Sidebar with tabs
 tab1, tab2 = st.sidebar.tabs(["Video Upload", "Image Upload"])
