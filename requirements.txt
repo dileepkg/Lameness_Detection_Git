@@ -17,7 +17,4 @@ scipy==1.15.3
 shapely==2.1.1
 streamlit==1.47.0
 tables==3.8.0
-typer==0.16.0
-types-python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/types-python-dateutil_1751956615826/work
-typing_extensions==4.14.1
-typing_utils @ file:///home/conda/feedstock_root/build_artifacts/typing_utils_1733331286120/work
+types-all
