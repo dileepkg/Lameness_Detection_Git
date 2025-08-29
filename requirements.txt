@@ -1,0 +1,23 @@
+deeplabcut==3.0.0rc9
+h5py==3.14.0
+matplotlib==3.8.4
+moviepy==1.0.3
+numpy==1.26.4
+opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+pandas==2.3.1
+pillow==11.3.0
+pydantic==1.10.22
+pydantic-compat==0.1.2
+python-dotenv==1.1.1
+requests-oauthlib==2.0.0
+scikit-image==0.25.2
+scikit-learn==1.7.0
+scipy==1.15.3
+shapely==2.1.1
+streamlit==1.47.0
+tables==3.8.0
+typer==0.16.0
+types-python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/types-python-dateutil_1751956615826/work
+typing_extensions==4.14.1
+typing_utils @ file:///home/conda/feedstock_root/build_artifacts/typing_utils_1733331286120/work
