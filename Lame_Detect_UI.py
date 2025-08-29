@@ -52,8 +52,8 @@ def post_estimation(video_path: str,
                                         dest_folder=dest_folder,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
-                                        detector_snapshot_path=str(detector_path),   # <- key bit
-                                        pose_snapshot_path=str(pose_path), 
+                                        customized_detector_checkpoint=str(detector_path),   # <- key bit
+                                        customized_pose_checkpoint=str(pose_path), 
                                         video_adapt=False,
                                         plot_bboxes=True)
 
