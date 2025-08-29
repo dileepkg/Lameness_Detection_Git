@@ -4,13 +4,18 @@ import os, pathlib
 # Put all caches under a local .cache folder (writable on Streamlit Cloud)
 CACHE = pathlib.Path(".cache")
 HF = CACHE / "hf"
-DLC_CKPTS = CACHE / "dlc" / "modelzoo" / "checkpoints"
-for p in (HF, DLC_CKPTS):
-    p.mkdir(parents=True, exist_ok=True)
+# DLC_CKPTS = CACHE / "dlc" / "modelzoo" / "checkpoints"
+# for p in (HF, DLC_CKPTS):
+#     p.mkdir(parents=True, exist_ok=True)
 
 # Make HuggingFace + general caches land in our writable dir (DLC uses HF for models)
 os.environ["HF_HOME"] = str(HF)
 os.environ["XDG_CACHE_HOME"] = str(CACHE)
+
+
+(CACHE / "huggingface").mkdir(parents=True, exist_ok=True)
+os.environ["XDG_CACHE_HOME"] = str(CACHE)                  # generic cache root
+os.environ["HF_HOME"] = str(CACHE / "huggingface")         # Hugging Face cache
 
 import streamlit as st
 # import deeplabcut
@@ -30,7 +35,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
-download_huggingface_model("superanimal_quadruped", DLC_CKPTS)
+download_huggingface_model("superanimal_quadruped", str(CACHE / "dlc" / "modelzoo" / "checkpoints"))
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
@@ -52,8 +57,8 @@ def post_estimation(video_path: str,
                                         dest_folder=dest_folder,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
-                                        customized_detector_checkpoint=str(detector_path),   # <- key bit
-                                        customized_pose_checkpoint=str(pose_path), 
+                                        # customized_detector_checkpoint=str(detector_path),   # <- key bit
+                                        # customized_pose_checkpoint=str(pose_path), 
                                         video_adapt=False,
                                         plot_bboxes=True)
 
@@ -126,7 +131,7 @@ st.title("🐎 Horse Lameness Detection 👨‍⚕️")
 
 # Create temporary directory for file processing
 temp_dir = tempfile.mkdtemp()
-dest_folder = temp_dir
+dest_folder = "outputs" #temp_dir
 
 # Sidebar with tabs
 tab1, tab2 = st.sidebar.tabs(["Video Upload", "Image Upload"])
