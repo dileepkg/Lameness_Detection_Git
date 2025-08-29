@@ -1,5 +1,6 @@
 import streamlit as st
-import deeplabcut
+# import deeplabcut
+from deeplabcut import video_inference_superanimal
 import Excel_Generator as exg
 import Asymmetry_Detection_V6 as asym
 import json
@@ -24,7 +25,7 @@ def post_estimation(video_path: str,
                     model_name: str = "hrnet_w32",
                     detector_name: str = "fasterrcnn_resnet50_fpn_v2"
 ):
-    deeplabcut.video_inference_superanimal([video_path],
+    video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
                                         detector_name=detector_name,
