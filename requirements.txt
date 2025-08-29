@@ -17,4 +17,4 @@ scipy==1.15.3
 shapely==2.1.1
 streamlit==1.47.0
 tables==3.8.0
-types-all
+types-python-dateutil==2.9.0.20250708
