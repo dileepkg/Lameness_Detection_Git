@@ -45,7 +45,7 @@ def post_estimation(video_path: str,
     # pose_path     = checkpoint_dir / "superanimal_quadruped_hrnet_w32.pt"
     detector_path = os.path.join(checkpoint_dir, "fasterrcnn_resnet50_fpn_v2.pt")
     pose_path     = os.path.join(checkpoint_dir, "superanimal_quadruped_hrnet_w32.pt")
-    
+
     video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
@@ -55,8 +55,8 @@ def post_estimation(video_path: str,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
                                         video_adapt=False,
-                                        customized_pose_checkpoint=str(pose_path),
-                                        customized_detector_checkpoint=str(detector_path),
+                                        customized_pose_checkpoint=pose_path,
+                                        customized_detector_checkpoint=detector_path,
                                         plot_bboxes=True)
 
 def to_posix_rel(path_str: str) -> str:
