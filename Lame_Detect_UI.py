@@ -115,8 +115,8 @@ def parse_markdown_report(report: str):
 st.title("🐎 Horse Lameness Detection 👨‍⚕️")
 
 # Create temporary directory for file processing
-temp_dir = tempfile.mkdtemp()
-dest_folder = temp_dir
+# temp_dir = tempfile.mkdtemp()
+dest_folder = checkpoint_dir#temp_dir
 
 # Sidebar with tabs
 tab1, tab2 = st.sidebar.tabs(["Video Upload", "Image Upload"])
@@ -126,7 +126,7 @@ with tab1:
     st.header("Upload Video")
     video_file = st.file_uploader("Choose a video file", type=['mp4'])
     if video_file is not None:
-        video_path = os.path.join(temp_dir, "input_video.mp4")
+        video_path = os.path.join(dest_folder, "input_video.mp4")
         with open(video_path, "wb") as f:
             f.write(video_file.getbuffer())
         st.success("Video uploaded successfully!")
@@ -155,7 +155,7 @@ with tab2:
     st.header("Upload Image")
     image_file = st.file_uploader("Choose an image file", type=['jpg', 'jpeg', 'png'])
     if image_file is not None:
-        image_path = os.path.join(temp_dir, image_file.name)
+        image_path = os.path.join(dest_folder, image_file.name)
         with open(image_path, "wb") as f:
             f.write(image_file.getbuffer())
         st.success(f"Image uploaded successfully!")
