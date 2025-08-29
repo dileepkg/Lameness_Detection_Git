@@ -30,6 +30,7 @@ st.write(f"DeepLabCut checkpoint directory set to: {checkpoint_dir}")
 st.write(f"Directory exists: {os.path.exists(checkpoint_dir)}")
 st.write(f"Directory writable: {os.access(checkpoint_dir, os.W_OK)}")
 st.write(f"Contents of {checkpoint_dir}: {os.listdir(checkpoint_dir) if os.path.exists(checkpoint_dir) else 'Empty'}")
+st.write(f"DeepLabCut output directory set to: {dest_folder}")
 
 # Post estimation function
 def post_estimation(video_path: str,
