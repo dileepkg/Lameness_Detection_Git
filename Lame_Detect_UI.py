@@ -1,6 +1,21 @@
+# streamlit_app.py (top of file)
+import os, pathlib
+
+# Put all caches under a local .cache folder (writable on Streamlit Cloud)
+CACHE = pathlib.Path(".cache")
+HF = CACHE / "hf"
+DLC_CKPTS = CACHE / "dlc" / "modelzoo" / "checkpoints"
+for p in (HF, DLC_CKPTS):
+    p.mkdir(parents=True, exist_ok=True)
+
+# Make HuggingFace + general caches land in our writable dir (DLC uses HF for models)
+os.environ["HF_HOME"] = str(HF)
+os.environ["XDG_CACHE_HOME"] = str(CACHE)
+
 import streamlit as st
 # import deeplabcut
 from deeplabcut import video_inference_superanimal
+from dlclibrary import download_huggingface_model
 import Excel_Generator as exg
 import Asymmetry_Detection_V6 as asym
 import json
@@ -15,6 +30,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
+download_huggingface_model("superanimal_quadruped", DLC_CKPTS)
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
@@ -25,6 +41,9 @@ def post_estimation(video_path: str,
                     model_name: str = "hrnet_w32",
                     detector_name: str = "fasterrcnn_resnet50_fpn_v2"
 ):
+    detector_path = DLC_CKPTS / "fasterrcnn_resnet50_fpn_v2.pt"
+    pose_path     = DLC_CKPTS / "superanimal_quadruped_hrnet_w32.pt"
+
     video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
@@ -33,6 +52,8 @@ def post_estimation(video_path: str,
                                         dest_folder=dest_folder,
                                         plot_trajectories=True,
                                         pcutoff=0.6,
+                                        detector_snapshot_path=str(detector_path),   # <- key bit
+                                        pose_snapshot_path=str(pose_path), 
                                         video_adapt=False,
                                         plot_bboxes=True)
 
