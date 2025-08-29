@@ -1,9 +1,7 @@
-deeplabcut==3.0.0rc9
 h5py==3.14.0
 matplotlib==3.8.4
 moviepy==1.0.3
 numpy==1.26.4
-opencv-python-headless>=4.8
 pandas==2.3.1
 pillow==11.3.0
 pydantic==1.10.22
@@ -21,3 +19,6 @@ ffmpeg-python>=0.2.0
 imageio>=2.31
 imageio-ffmpeg>=0.4.9
 openai
+opencv-python-headless==4.9.0.80
+deeplabcut[modelzoo]        # DLC + model zoo support (CPU-only is fine on Cloud)
+
