@@ -41,8 +41,11 @@ def post_estimation(video_path: str,
                     model_name: str = "hrnet_w32",
                     detector_name: str = "fasterrcnn_resnet50_fpn_v2"
 ):
-    detector_path = checkpoint_dir / "fasterrcnn_resnet50_fpn_v2.pt"
-    pose_path     = checkpoint_dir / "superanimal_quadruped_hrnet_w32.pt"
+    # detector_path = checkpoint_dir / "fasterrcnn_resnet50_fpn_v2.pt"
+    # pose_path     = checkpoint_dir / "superanimal_quadruped_hrnet_w32.pt"
+    detector_path = os.path.join(checkpoint_dir, "fasterrcnn_resnet50_fpn_v2.pt")
+    pose_path     = os.path.join(checkpoint_dir, "superanimal_quadruped_hrnet_w32.pt")
+    
     video_inference_superanimal([video_path],
                                         superanimal_name,
                                         model_name=model_name,
