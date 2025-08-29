@@ -19,9 +19,15 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Set DeepLabCut checkpoint directory to a writable location
-checkpoint_dir = os.path.join(tempfile.gettempdir(), "checkpoints")
+checkpoint_dir = "./checkpoints"
 os.makedirs(checkpoint_dir, exist_ok=True)
 os.environ["DLC_MODELZOO_CHECKPOINTS"] = checkpoint_dir
+
+# Debugging: Log DeepLabCut configuration
+st.write(f"DeepLabCut checkpoint directory set to: {checkpoint_dir}")
+st.write(f"Directory exists: {os.path.exists(checkpoint_dir)}")
+st.write(f"Directory writable: {os.access(checkpoint_dir, os.W_OK)}")
+st.write(f"Contents of {checkpoint_dir}: {os.listdir(checkpoint_dir) if os.path.exists(checkpoint_dir) else 'Empty'}")
 
 # Post estimation function
 def post_estimation(video_path: str,
